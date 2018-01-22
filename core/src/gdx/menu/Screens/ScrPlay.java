@@ -198,17 +198,24 @@ import gdx.menu.GamMenu;
 public class ScrPlay implements Screen {
 
     GamMenu game;
-    private Texture txDot;
+    private int movePath;
+//    private Texture txDot;
     private Texture txHero;
+    private Texture txHeroProjectile;
     private Texture txEnemy;
-    private Sound dropSound;
-    private Music rainMusic;
+//    private Sound dropSound;
+    private Sound shotSound;
+    private Music gamemusic;
+    private Music gameovermusic;
+    private Music endscreenmusic;
     private SpriteBatch batch;
-    private Sprite sprDot, sprHero, sprEnemy; // a Sprite allows you to get the bounding rectangle
+    private Sprite /*sprDot*/ sprHero, sprEnemy, sprHeroProjectile; // a Sprite allows you to get the bounding rectangle
     private OrthographicCamera camera;
     private Array<Sprite> arsprDrop; // use an array of Sprites rather than rectangles
+    private Array<Sprite> arsprHeroprojectile;
     private Array<Sprite> arsprEnemy;
     private long lastDropTime;
+    private long lastShotTime;
     private long lastEnemyTime;
     private int nScore;
     private int nLives;
@@ -218,42 +225,67 @@ public class ScrPlay implements Screen {
     public ScrPlay(GamMenu _game) {
         game = _game;
         // load the images for the droplet and the bucket, 64x64 pixels each
-        txDot = new Texture(Gdx.files.internal("dot.png"));
+//        txDot = new Texture(Gdx.files.internal("dot.png"));
         txHero = new Texture(Gdx.files.internal("Hero.png"));
+        txHeroProjectile = new Texture(Gdx.files.internal("Hero Projectile.png"));
         txEnemy = new Texture(Gdx.files.internal("Enemy.png"));
         font = new BitmapFont();
         nLives = 3;
         spawnMillis = 1000;
         sprHero = new Sprite(txHero);
-        sprDot = new Sprite(txDot);
+        sprHeroProjectile = new Sprite(txHeroProjectile);
+//        sprDot = new Sprite(txDot);
         sprEnemy = new Sprite(txEnemy);
 
         // load the drop sound effect and the rain background "music"
-        dropSound = Gdx.audio.newSound(Gdx.files.internal("drop.wav"));
-        rainMusic = Gdx.audio.newMusic(Gdx.files.internal("rain.mp3"));
-
+//        dropSound = Gdx.audio.newSound(Gdx.files.internal("drop.wav"));
+//        if (game.equals(1)) {
+        gamemusic = Gdx.audio.newMusic(Gdx.files.internal("Game Music.mp3"));
+        gameovermusic = Gdx.audio.newMusic(Gdx.files.internal("Gameover.wav"));
+        endscreenmusic = Gdx.audio.newMusic(Gdx.files.internal("endscreen.mp3"));
+//        }
+        shotSound = Gdx.audio.newSound(Gdx.files.internal("shot.mp3"));
         // start the playback of the background music immediately
-        rainMusic.setLooping(true);
-        rainMusic.play();
+        //rainMusic.setLooping(true);
+//        rainMusic.play();
 
         // create the camera and the SpriteBatch
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 480);
         batch = new SpriteBatch();
         arsprDrop = new Array<Sprite>();// array of Sprites rather than Rectangles
+        arsprHeroprojectile = new Array<Sprite>();
         batch = new SpriteBatch();
         arsprEnemy = new Array<Sprite>();
-        spawnRaindrop();
+//        spawnRaindrop();
+        spawnHeroprojectile();
         spawnEnemy();
     }
 
-    private void spawnRaindrop() {
-        Sprite sprDrop = new Sprite(txDot);
-        sprDrop.setX(MathUtils.random(0, 800 - 64));
-        sprDrop.setY(480);
-        arsprDrop.add(sprDrop);
-        lastDropTime = TimeUtils.nanoTime();
-    }
+//    private void spawnRaindrop() {
+//        Sprite sprDrop = new Sprite(txDot);
+//        sprDrop.setX(MathUtils.random(0, 800 - 64));
+//        sprDrop.setY(480);
+//        arsprDrop.add(sprDrop);
+//        lastDropTime = TimeUtils.nanoTime();
+//    }
+    
+    private void spawnHeroprojectile() {
+        if (Gdx.input.isKeyPressed(Keys.LEFT)) {
+        Sprite sprHeroProjectile = new Sprite(txHeroProjectile);
+        sprHeroProjectile.setX(115);        
+        sprHeroProjectile.setY(15);
+        arsprHeroprojectile.add(sprHeroProjectile);
+        lastShotTime = TimeUtils.nanoTime();
+      }
+        if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
+        Sprite sprHeroProjectile = new Sprite(txHeroProjectile);
+        sprHeroProjectile.setX(115);        
+        sprHeroProjectile.setY(15);
+        arsprHeroprojectile.add(sprHeroProjectile);
+        lastShotTime = TimeUtils.nanoTime();
+      }
+   }
 
     private void spawnEnemy() {
         Sprite sprEnemy = new Sprite(txEnemy);
@@ -266,10 +298,12 @@ public class ScrPlay implements Screen {
     @Override
     public void dispose() {
         // dispose of all the native resources
-        txDot.dispose();
+//        txDot.dispose();
+        txHeroProjectile.dispose();
         txHero.dispose();
-        dropSound.dispose();
-        rainMusic.dispose();
+//        dropSound.dispose();
+        shotSound.dispose();
+//        rainMusic.dispose();
         batch.dispose();
     }
 
@@ -313,8 +347,11 @@ public class ScrPlay implements Screen {
             batch.draw(sprHero, sprHero.getX(), sprHero.getY());
             batch.draw(sprEnemy, sprEnemy.getX(), sprEnemy.getY());
 
-            for (Sprite sprDrop : arsprDrop) {
-                batch.draw(sprDrop, sprDrop.getX(), sprDrop.getY());
+//            for (Sprite sprDrop : arsprDrop) {
+//                batch.draw(sprDrop, sprDrop.getX(), sprDrop.getY());
+//            }
+            for (Sprite sprHeroProjectile: arsprHeroprojectile) {
+                batch.draw(sprHeroProjectile, sprHeroProjectile.getX(), sprHeroProjectile.getY());
             }
         }
         font.draw(batch, Integer.toString(nScore), 10, 10);
@@ -332,29 +369,37 @@ public class ScrPlay implements Screen {
         /*if(Gdx.input.isKeyPressed(Keys.LEFT)) bucket.x -= 200 * Gdx.graphics.getDeltaTime();
          if(Gdx.input.isKeyPressed(Keys.RIGHT)) bucket.x += 200 * Gdx.graphics.getDeltaTime();*/
         if (Gdx.input.isKeyPressed(Keys.LEFT)) {
-            sprHero.setX(sprHero.getX() - 500 * Gdx.graphics.getDeltaTime());
+            spawnHeroprojectile();
         }
         if (Gdx.input.isKeyPressed(Keys.A)) {
-            sprEnemy.setX(sprEnemy.getX() - 200 * Gdx.graphics.getDeltaTime());
+            sprHero.setX(sprHero.getX() - 200 * Gdx.graphics.getDeltaTime());
         }
-        if (Gdx.input.isKeyPressed(Keys.UP)) {
-            sprHero.setY(sprHero.getY() + 500 * Gdx.graphics.getDeltaTime());
-        }
-        if (Gdx.input.isKeyPressed(Keys.W)) {
+        if (Gdx.input.isKeyPressed(Keys.SPACE)) {
             sprEnemy.setY(sprEnemy.getY() + 200 * Gdx.graphics.getDeltaTime());
         }
-        if (Gdx.input.isKeyPressed(Keys.DOWN)) {
-            sprHero.setY(sprHero.getY() - 500 * Gdx.graphics.getDeltaTime());
+//        if (Gdx.input.isKeyPressed(Keys.UP)) {
+//            sprHero.setY(sprHero.getY() + 500 * Gdx.graphics.getDeltaTime());
+//        }
+        if (Gdx.input.isKeyPressed(Keys.W)) {
+            sprHero.setY(sprHero.getY() + 200 * Gdx.graphics.getDeltaTime());
         }
+//        if (Gdx.input.isKeyPressed(Keys.DOWN)) {
+//            sprHero.setY(sprHero.getY() - 500 * Gdx.graphics.getDeltaTime());
+//        }
         if (Gdx.input.isKeyPressed(Keys.S)) {
-            sprEnemy.setY(sprEnemy.getY() - 200 * Gdx.graphics.getDeltaTime());
+            sprHero.setY(sprHero.getY() - 200 * Gdx.graphics.getDeltaTime());
         }
         if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
-            sprHero.setX(sprHero.getX() + 500 * Gdx.graphics.getDeltaTime());
+          spawnHeroprojectile();
         }
         if (Gdx.input.isKeyPressed(Keys.D)) {
-            sprEnemy.setX(sprEnemy.getX() + 200 * Gdx.graphics.getDeltaTime());
+            sprHero.setX(sprHero.getX() + 200 * Gdx.graphics.getDeltaTime());
         }
+        
+//        if (Gdx.input.isKeyPressed(Keys.SPACE)) {
+//          //sprHeroProjectile.setX(sprHeroProjectile.getX() + 500 * Gdx.graphics.getDeltaTime());
+//          spawnHeroprojectile();
+//        }
 
         // make sure the bucket stays within the screen bounds
         /*if(bucket.x < 0) bucket.x = 0;
@@ -362,11 +407,17 @@ public class ScrPlay implements Screen {
         if (sprHero.getX() < 0) {
             sprHero.setX(0);
         }
-        if (sprEnemy.getX() < 0) {
-            sprEnemy.setX(0);
-        }
         if (sprHero.getX() > 800 - 64) {
             sprHero.setX(800 - 64);
+        }
+        if (sprHero.getY() < 0) {
+            sprHero.setY(0);
+        }
+        if (sprHero.getY() > 400) {
+            sprHero.setY(400);
+        }
+        if (sprEnemy.getX() < 0) {
+            sprEnemy.setX(0);
         }
         if (sprEnemy.getX() > 800 - 64) {
             sprEnemy.setX(800 - 64);
@@ -374,9 +425,12 @@ public class ScrPlay implements Screen {
 
         // check if we need to create a new raindrop
         spawnMillis = 1000 - (nScore * 5 / 2);
-        if (TimeUtils.nanoTime() - lastDropTime > 1000000 * spawnMillis) {
-            spawnRaindrop();
-        }
+//        if (TimeUtils.nanoTime() - lastDropTime > 1000000 * spawnMillis) {
+//            spawnRaindrop();
+//        }
+        //if (TimeUtils.nanoTime() - lastShotTime > 1000000 * spawnMillis) {
+        //    spawnHeroprojectile();
+        //}
         if (TimeUtils.nanoTime() - lastEnemyTime > 1000000 * spawnMillis) {
             spawnEnemy();
         }
@@ -385,29 +439,57 @@ public class ScrPlay implements Screen {
         // the screen or that hit the bucket. In the later case we play back
         // a sound effect as well.
         //Iterator<Rectangle> iter = raindrops.iterator();
-        Iterator<Sprite> iter = arsprDrop.iterator();
-        while (iter.hasNext()) {
-            Sprite sprDot = iter.next();
+//        Iterator<Sprite> iter = arsprDrop.iterator();
+        Iterator<Sprite> shot = arsprHeroprojectile.iterator();
+        while (/*iter.hasNext() && */ shot.hasNext()) {
+//            Sprite sprDot = iter.next();
+            Sprite sprHeroProjectile = shot.next();
             // lower the drop
             //raindrop.y -= (150 + 2*nScore) * Gdx.graphics.getDeltaTime();
-            sprDot.setY(sprDot.getY() - (150 + 2 * nScore) * Gdx.graphics.getDeltaTime());
-            if (sprDot.getY() + 64 < 0) {
-                nLives--;
-                iter.remove();
+//            sprDot.setY(sprDot.getY() - (150 + 2 * nScore) * Gdx.graphics.getDeltaTime());
+            sprHeroProjectile.setX(sprHeroProjectile.getX() + 15);
+//            if (sprDot.getY() + 64 < 0) {
+//                nLives--;
+//                iter.remove();
+//            }
+            if (sprHeroProjectile.getX() > 800 - 64) {
+                shot.remove();
             }
-            if (sprDot.getBoundingRectangle().overlaps(sprHero.getBoundingRectangle())) {
-                dropSound.play();
+            if (sprHeroProjectile.getBoundingRectangle().overlaps(sprEnemy.getBoundingRectangle())) {
+                shotSound.play();
                 nScore++;
-                iter.remove();
+                shot.remove();
             }
-            if (sprDot.getBoundingRectangle().overlaps(sprEnemy.getBoundingRectangle())) {
-                dropSound.play();
-                nScore--;
-                iter.remove();
+            
+//            if (sprHero.getBoundingRectangle().overlaps(sprEnemy.getBoundingRectangle())) {
+//                nLives--;
+//            }
+//            if (sprDot.getBoundingRectangle().overlaps(sprHero.getBoundingRectangle())) {
+//                dropSound.play();
+//                nScore++;
+//                iter.remove();
+//            }
+//            if (sprDot.getBoundingRectangle().overlaps(sprEnemy.getBoundingRectangle())) {
+//                dropSound.play();
+//                nScore--;
+//                iter.remove();
+//            }
+            if (Gdx.input.isKeyPressed(Keys.LEFT)) {
+                shotSound.play();
+            }
+            if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
+                shotSound.play();
             }
             if (nLives == 0){
                 //setScreen(scrGameover());
                 game.updateState(2);
+                gameovermusic.play();
+                endscreenmusic.setLooping(true);
+                endscreenmusic.play(); 
+            }
+            
+            if (nLives > 0){
+                gamemusic.play();
             }
         }
     }
