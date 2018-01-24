@@ -2,198 +2,26 @@ package gdx.menu.Screens;
 
 import java.util.Iterator;
 
-//import com.badlogic.gdx.Gdx;
-//import com.badlogic.gdx.InputProcessor;
-//import com.badlogic.gdx.Screen;
-//import com.badlogic.gdx.graphics.GL20;
-//import com.badlogic.gdx.graphics.g2d.Sprite;
-//import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-//import com.badlogic.gdx.graphics.Texture;
-//import com.badlogic.gdx.graphics.OrthographicCamera;
-//import com.badlogic.gdx.Input;
-//import gdx.menu.GamMenu;
-
-import com.badlogic.gdx.ApplicationListener;
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 import gdx.menu.GamMenu;
 
-//public class ScrPlay implements Screen, InputProcessor {
-//    Dude dud1;
-//    Button btnQuit, btnAni;
-////    Wall[] arWall = new Wall[4];
-//    GamMenu gamMenu;
-//    OrthographicCamera oc;
-//    SpriteBatch batch;
-//    Texture txNamP, txWall;
-//    Sprite sprNamP;
-//
-//    public ScrPlay(GamMenu _gamMenu) {  //Referencing the main class.
-//        gamMenu = _gamMenu;
-//    }
-//
-//    @Override
-//    public void show() {
-//        oc = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-//        oc.setToOrtho(true, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-//        oc.update();
-////        txWall = new Texture("Wall.jpg");
-//        //Setting up Walls
-////        arWall[0] = new Wall(Gdx.graphics.getWidth(), 50, 0, 0);    //Top Wall
-////        arWall[1] = new Wall(50, Gdx.graphics.getHeight() - 50, Gdx.graphics.getWidth() - 50, 0);   //Right Wall
-////        arWall[2] = new Wall(50, Gdx.graphics.getHeight() - 50, 0, 0);     //Left Wall
-////        arWall[3] = new Wall(Gdx.graphics.getWidth(), 50, 0, Gdx.graphics.getHeight() - 100);       //Bottom Wall
-//        batch = new SpriteBatch();
-//        txNamP = new Texture("P.jpg");
-//        sprNamP = new Sprite(txNamP);
-//        sprNamP.setSize(60, 80);
-//        sprNamP.setFlip(false, true);
-//        sprNamP.setPosition(Gdx.graphics.getWidth() / 2 - 30, Gdx.graphics.getHeight() / 2 - 40);
-//        dud1 = new Dude(50, 100, 200, 250);
-//        btnAni = new Button(100, 50, Gdx.graphics.getWidth() - 100, Gdx.graphics.getHeight() - 50, "Animation.jpg");
-//        btnQuit = new Button(100, 50, 0, Gdx.graphics.getHeight() - 50, "Quit.jpg");
-//        Gdx.input.setInputProcessor(this);
-//    }
-//
-//    @Override
-//    public void render(float delta) {
-//        Gdx.gl.glClearColor(.135f, .206f, .235f, 1); //blue background.
-//        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-//        float fSx = dud1.getX();
-//        float fSy = dud1.getY();
-//        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-//            dud1.setX(dud1.getX() - 5);
-//        }
-//        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-//            dud1.setX(dud1.getX() + 5);
-//        }
-//        if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-//            dud1.setY(dud1.getY() + 5);
-//        }
-//        if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-//            dud1.setY(dud1.getY() - 5);
-//        }
-//        if (isHitS(dud1, sprNamP)) {
-//            dud1.setPosition(fSx, fSy);
-//        }
-////        for (int i = 0; i < arWall.length; i++) {
-////            if (isHitS(dud1, arWall[i])) {
-////                dud1.setPosition(fSx, fSy);
-////            }
-////        }
-//        batch.begin();
-//        batch.setProjectionMatrix(oc.combined);
-//        btnAni.draw(batch);
-//        btnQuit.draw(batch);
-//        sprNamP.draw(batch);
-//        dud1.draw(batch);
-////        for (int i = 0; i < arWall.length; i++) {
-////            arWall[i].draw(batch);
-////        }
-//        batch.end();
-//
-//    }
-//
-//    @Override
-//    public void resize(int width, int height) {
-//    }
-//
-//    @Override
-//    public void pause() {
-//    }
-//
-//    @Override
-//    public void resume() {
-//    }
-//
-//    @Override
-//    public void hide() {
-//    }
-//
-//    @Override
-//    public void dispose() {
-//        batch.dispose();
-//        txNamP.dispose();
-//    }
-//
-//    @Override
-//    public boolean keyDown(int keycode) {
-//        return false;
-//    }
-//
-//    @Override
-//    public boolean keyUp(int keycode) {
-//        return false;
-//    }
-//
-//    @Override
-//    public boolean keyTyped(char character) {
-//        return false;
-//    }
-//
-//    @Override
-//    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-//        if (button == Input.Buttons.LEFT) {
-//            //System.out.println(screenX +" " + screenY);
-//            if (isHitB(screenX, screenY, btnAni)) {
-//                gamMenu.updateState(3);
-//                System.out.println("Hit Tools");
-//            } else if (isHitB(screenX, screenY, btnQuit)) {
-//                gamMenu.updateState(2);
-//                System.out.println("Hit Quit");
-//            } else {
-//            }
-//        }
-//        return false;
-//    }
-//
-//    @Override
-//    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-//        return false;
-//    }
-//
-//    @Override
-//    public boolean touchDragged(int screenX, int screenY, int pointer) {
-//        return false;
-//    }
-//
-//    @Override
-//    public boolean mouseMoved(int screenX, int screenY) {
-//        return false;
-//    }
-//
-//    @Override
-//    public boolean scrolled(int amount) {
-//        return false;
-//    }
-//
-//    public boolean isHitB(int nX, int nY, Sprite sprBtn) {
-//        if (nX > sprBtn.getX() && nX < sprBtn.getX() + sprBtn.getWidth() && nY > sprBtn.getY() && nY < sprBtn.getY() + sprBtn.getHeight()) {
-//            return true;
-//        } else {
-//            return false;
-//        }
-//    }
-//
-//    public boolean isHitS(Sprite spr1, Sprite spr2) {
-//        return spr1.getBoundingRectangle().overlaps(spr2.getBoundingRectangle());
-//    }
-//}
 
 public class ScrPlay implements Screen {
 
@@ -211,16 +39,19 @@ public class ScrPlay implements Screen {
     private SpriteBatch batch;
     private Sprite /*sprDot*/ sprHero, sprEnemy, sprHeroProjectile; // a Sprite allows you to get the bounding rectangle
     private OrthographicCamera camera;
-    private Array<Sprite> arsprDrop; // use an array of Sprites rather than rectangles
+//    private Array<Sprite> arsprDrop; // use an array of Sprites rather than rectangles
     private Array<Sprite> arsprHeroprojectile;
     private Array<Sprite> arsprEnemy;
     private long lastDropTime;
     private long lastShotTime;
     private long lastEnemyTime;
+    private int xEnemy;
+    private int yEnemy;
     private int nScore;
     private int nLives;
     private BitmapFont font;
     private int spawnMillis;
+    ShapeRenderer renderer;
 
     public ScrPlay(GamMenu _game) {
         game = _game;
@@ -232,7 +63,7 @@ public class ScrPlay implements Screen {
         font = new BitmapFont();
         nLives = 3;
         spawnMillis = 1000;
-        sprHero = new Sprite(txHero);
+        sprHero = new Sprite(txHero, 290, 175);
         sprHeroProjectile = new Sprite(txHeroProjectile);
 //        sprDot = new Sprite(txDot);
         sprEnemy = new Sprite(txEnemy);
@@ -253,11 +84,12 @@ public class ScrPlay implements Screen {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 480);
         batch = new SpriteBatch();
-        arsprDrop = new Array<Sprite>();// array of Sprites rather than Rectangles
+//        arsprDrop = new Array<Sprite>();// array of Sprites rather than Rectangles
         arsprHeroprojectile = new Array<Sprite>();
         batch = new SpriteBatch();
         arsprEnemy = new Array<Sprite>();
 //        spawnRaindrop();
+        renderer = new ShapeRenderer();
         spawnHeroprojectile();
         spawnEnemy();
     }
@@ -273,24 +105,22 @@ public class ScrPlay implements Screen {
     private void spawnHeroprojectile() {
         if (Gdx.input.isKeyPressed(Keys.LEFT)) {
         Sprite sprHeroProjectile = new Sprite(txHeroProjectile);
-        sprHeroProjectile.setX(115);        
-        sprHeroProjectile.setY(15);
+        sprHeroProjectile.setX(sprHero.getX());        
+        sprHeroProjectile.setY(sprHero.getY());
         arsprHeroprojectile.add(sprHeroProjectile);
         lastShotTime = TimeUtils.nanoTime();
       }
         if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
         Sprite sprHeroProjectile = new Sprite(txHeroProjectile);
-        sprHeroProjectile.setX(115);        
-        sprHeroProjectile.setY(15);
+        sprHeroProjectile.setX(sprHero.getX());        
+        sprHeroProjectile.setY(sprHero.getY());
         arsprHeroprojectile.add(sprHeroProjectile);
         lastShotTime = TimeUtils.nanoTime();
       }
    }
 
     private void spawnEnemy() {
-        Sprite sprEnemy = new Sprite(txEnemy);
-        sprEnemy.setX(MathUtils.random(0, 800 - 64));
-        sprEnemy.setY(480);
+        Sprite sprEnemy = new Sprite(txEnemy, 0, 0);
         arsprEnemy.add(sprEnemy);
         lastEnemyTime = TimeUtils.millis();
     }
@@ -344,8 +174,8 @@ public class ScrPlay implements Screen {
         // all drops
         batch.begin();
         if (nLives > 0) {
-            batch.draw(sprHero, sprHero.getX(), sprHero.getY());
-            batch.draw(sprEnemy, sprEnemy.getX(), sprEnemy.getY());
+            sprHero.draw(batch);
+            sprEnemy.draw(batch);
 
 //            for (Sprite sprDrop : arsprDrop) {
 //                batch.draw(sprDrop, sprDrop.getX(), sprDrop.getY());
@@ -354,38 +184,32 @@ public class ScrPlay implements Screen {
                 batch.draw(sprHeroProjectile, sprHeroProjectile.getX(), sprHeroProjectile.getY());
             }
         }
+        if (sprEnemy.getY() == 0) {
+        sprEnemy.setPosition(sprEnemy.getX()+5, sprEnemy.getY());
+        }
+        if (sprEnemy.getX() > 780 - 64) {
+        sprEnemy.setPosition(sprEnemy.getX(), sprEnemy.getY()+5);
+        }
+        if (sprEnemy.getY() > 380) {
+        sprEnemy.setPosition(sprEnemy.getX()-5, sprEnemy.getY());
+        }
+        if (sprEnemy.getX() == 0) {
+        sprEnemy.setPosition(sprEnemy.getX(), sprEnemy.getY()-5);
+        }
         font.draw(batch, Integer.toString(nScore), 10, 10);
         font.draw(batch, Integer.toString(nLives), 200, 10);
         font.draw(batch, Integer.toString(spawnMillis), 400, 10);
         batch.end();
 
-        // process user input
-        if (Gdx.input.isTouched()) {
-            Vector3 touchPos = new Vector3();
-            touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-            camera.unproject(touchPos);
-            sprHero.setX(touchPos.x - 64 / 2);
-        }
-        /*if(Gdx.input.isKeyPressed(Keys.LEFT)) bucket.x -= 200 * Gdx.graphics.getDeltaTime();
-         if(Gdx.input.isKeyPressed(Keys.RIGHT)) bucket.x += 200 * Gdx.graphics.getDeltaTime();*/
         if (Gdx.input.isKeyPressed(Keys.LEFT)) {
             spawnHeroprojectile();
         }
         if (Gdx.input.isKeyPressed(Keys.A)) {
             sprHero.setX(sprHero.getX() - 200 * Gdx.graphics.getDeltaTime());
         }
-        if (Gdx.input.isKeyPressed(Keys.SPACE)) {
-            sprEnemy.setY(sprEnemy.getY() + 200 * Gdx.graphics.getDeltaTime());
-        }
-//        if (Gdx.input.isKeyPressed(Keys.UP)) {
-//            sprHero.setY(sprHero.getY() + 500 * Gdx.graphics.getDeltaTime());
-//        }
         if (Gdx.input.isKeyPressed(Keys.W)) {
             sprHero.setY(sprHero.getY() + 200 * Gdx.graphics.getDeltaTime());
         }
-//        if (Gdx.input.isKeyPressed(Keys.DOWN)) {
-//            sprHero.setY(sprHero.getY() - 500 * Gdx.graphics.getDeltaTime());
-//        }
         if (Gdx.input.isKeyPressed(Keys.S)) {
             sprHero.setY(sprHero.getY() - 200 * Gdx.graphics.getDeltaTime());
         }
@@ -395,11 +219,7 @@ public class ScrPlay implements Screen {
         if (Gdx.input.isKeyPressed(Keys.D)) {
             sprHero.setX(sprHero.getX() + 200 * Gdx.graphics.getDeltaTime());
         }
-        
-//        if (Gdx.input.isKeyPressed(Keys.SPACE)) {
-//          //sprHeroProjectile.setX(sprHeroProjectile.getX() + 500 * Gdx.graphics.getDeltaTime());
-//          spawnHeroprojectile();
-//        }
+
 
         // make sure the bucket stays within the screen bounds
         /*if(bucket.x < 0) bucket.x = 0;
@@ -422,15 +242,21 @@ public class ScrPlay implements Screen {
         if (sprEnemy.getX() > 800 - 64) {
             sprEnemy.setX(800 - 64);
         }
+        if (sprEnemy.getY() < 0) {
+            sprEnemy.setY(0);
+        }
+        if (sprEnemy.getY() > 400) {
+            sprEnemy.setY(400);
+        }
 
         // check if we need to create a new raindrop
         spawnMillis = 1000 - (nScore * 5 / 2);
 //        if (TimeUtils.nanoTime() - lastDropTime > 1000000 * spawnMillis) {
 //            spawnRaindrop();
 //        }
-        //if (TimeUtils.nanoTime() - lastShotTime > 1000000 * spawnMillis) {
-        //    spawnHeroprojectile();
-        //}
+        if (TimeUtils.nanoTime() - lastShotTime > 1000000 * spawnMillis) {
+            spawnHeroprojectile();
+        }
         if (TimeUtils.nanoTime() - lastEnemyTime > 1000000 * spawnMillis) {
             spawnEnemy();
         }
@@ -441,20 +267,25 @@ public class ScrPlay implements Screen {
         //Iterator<Rectangle> iter = raindrops.iterator();
 //        Iterator<Sprite> iter = arsprDrop.iterator();
         Iterator<Sprite> shot = arsprHeroprojectile.iterator();
-        while (/*iter.hasNext() && */ shot.hasNext()) {
+        while (shot.hasNext()) {
 //            Sprite sprDot = iter.next();
             Sprite sprHeroProjectile = shot.next();
+            //Sprite sprEnemy = move.next();
             // lower the drop
             //raindrop.y -= (150 + 2*nScore) * Gdx.graphics.getDeltaTime();
 //            sprDot.setY(sprDot.getY() - (150 + 2 * nScore) * Gdx.graphics.getDeltaTime());
             sprHeroProjectile.setX(sprHeroProjectile.getX() + 15);
+            //sprEnemy.setX(sprEnemy.getX() + 20);
 //            if (sprDot.getY() + 64 < 0) {
 //                nLives--;
 //                iter.remove();
 //            }
-            if (sprHeroProjectile.getX() > 800 - 64) {
-                shot.remove();
-            }
+//            renderer.begin(ShapeType.Line);
+//            renderer.setColor(Color.BLACK);
+//            renderer.setProjectionMatrix(camera.combined);
+//            renderer.rect(sprEnemy.getX(), sprEnemy.getY(), sprEnemy.getWidth(),sprEnemy.getHeight());
+//            renderer.rect(sprHeroProjectile.getX(), sprHeroProjectile.getY(), sprHeroProjectile.getWidth(), sprHeroProjectile.getHeight());
+//            renderer.end();
             if (sprHeroProjectile.getBoundingRectangle().overlaps(sprEnemy.getBoundingRectangle())) {
                 shotSound.play();
                 nScore++;
