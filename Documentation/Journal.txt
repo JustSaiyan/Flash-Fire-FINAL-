@@ -1,0 +1,37 @@
+January 10th, 2018:
+- Attempted to make menu screen for MoveSprite, failed to build
+- After changing setScreen in GamMoveSprite from ScrMoveSprite to ScrPlay, build is successful, but runs for
+  about a milisecond (Unplayable)
+- Copy and pasted asssests from MoveSprite - Copy to MenuButton2 - Copy 2, build successful, menu and game works
+
+January 11th, 2018:
+- MoveSprite now switches to ScrGameover when player loses all their lives
+- When on ScrGameover, pressing the play button just switches you back to ScrGameover
+  instead of switching to ScrPlay
+
+January 15th, 2018:
+- Got projectile to spawn in and make a sound when pressing the Spacebar, but doesn't move
+
+January 18th, 2018:
+- While messing around with iterators the projectile sprite moves to where you collect the dots, 
+  projectile sprite spawns seratically when holding down the Space bar and dots don't spawn until you spawn the
+  projectile sprite. Basically, the game's busted at the moment.
+- Got rid of some pointless code, game slightly more stable, but still busted.
+
+January 19th, 2018:
+- Commented out all code affiliated with the dots to make it so there is no way to somehow add both together and
+  so that it's easier to test everything
+- Able to shoot projectile across the screen, finally
+- Made different music play depending on what screen the player is on
+
+January 22nd, 2018:
+- Offically changed the project name to Flash Fire (Better than MenuButton2, right?)
+- Projectile now shoots from the Hero sprite (A lot easier to do than I thought.....)
+
+January 23rd, 2018:
+- Made sprEnemy move around the screen in a set pattern, although made it so that his hitbox is messed up
+- Changed sprHero to spawn in the middle of the screeen
+
+January 24th, 2018:
+- Fixed issue with sprEnemy hitbox so that when the enemy is shot, player will get points
+- Made sprHero spawn back in the corner which somehow made him get 2 red bars below his feet
