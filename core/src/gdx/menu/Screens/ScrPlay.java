@@ -109,6 +109,7 @@ public class ScrPlay implements Screen {
         sprHeroProjectile.setY(sprHero.getY());
         arsprHeroprojectile.add(sprHeroProjectile);
         lastShotTime = TimeUtils.nanoTime();
+        System.out.println("Shoot");
       }
         if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
         Sprite sprHeroProjectile = new Sprite(txHeroProjectile);
@@ -116,6 +117,7 @@ public class ScrPlay implements Screen {
         sprHeroProjectile.setY(sprHero.getY());
         arsprHeroprojectile.add(sprHeroProjectile);
         lastShotTime = TimeUtils.nanoTime();
+        System.out.println("Shoot");
       }
    }
 
@@ -206,18 +208,22 @@ public class ScrPlay implements Screen {
         }
         if (Gdx.input.isKeyPressed(Keys.A)) {
             sprHero.setX(sprHero.getX() - 200 * Gdx.graphics.getDeltaTime());
+            System.out.println("Move Left");
         }
         if (Gdx.input.isKeyPressed(Keys.W)) {
             sprHero.setY(sprHero.getY() + 200 * Gdx.graphics.getDeltaTime());
+            System.out.println("Move Up");
         }
         if (Gdx.input.isKeyPressed(Keys.S)) {
             sprHero.setY(sprHero.getY() - 200 * Gdx.graphics.getDeltaTime());
+            System.out.println("Move Down");
         }
         if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
           spawnHeroprojectile();
         }
         if (Gdx.input.isKeyPressed(Keys.D)) {
             sprHero.setX(sprHero.getX() + 200 * Gdx.graphics.getDeltaTime());
+            System.out.println("Move Right");
         }
 
 
